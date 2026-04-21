@@ -1,0 +1,15 @@
+from control import PID
+
+
+
+heaving_pid = PID(kp=2.0, ki=0.5, kd=0.1)
+
+surging_pid = PID(kp=1.0, ki=0.1, kd=0.05)
+
+swaying_pid = PID(kp=1.0, ki=0.1, kd=0.05)
+
+pitch_pid = PID(kp=1.5, ki=0.2, kd=0.4)
+
+roll_pid = PID(kp=1.5, ki=0.2, kd=0.4)
+
+yaw_pid = PID(kp=1.2, ki=0.0, kd=0.2)
