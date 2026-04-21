@@ -1,0 +1,41 @@
+import time
+
+class PID:
+    def __init__(self, Kp, Ki, Kd, setpoint=0):
+        self.Kp = Kp  # Proportional gain
+        self.Ki = Ki  # Integral gain
+        self.Kd = Kd  # Derivative gain
+        self.setpoint = setpoint
+        
+        self._prev_error = 0
+        self._integral = 0
+        self._last_time = time.time()
+
+    def update(self, current_value):
+        # Calculate time delta
+        now = time.time()
+        dt = now - self._last_time
+        if dt <= 0: return 0
+        
+        # 1. Calculate Error
+        error = self.setpoint - current_value
+        
+        # 2. Proportional term
+        P = self.Kp * error
+        
+        # 3. Integral term
+        self._integral += error * dt
+        I = self.Ki * self._integral
+        
+        # 4. Derivative term
+        derivative = (error - self._prev_error) / dt
+        D = self.Kd * derivative
+        
+        # Compute total output
+        output = P + I + D
+        
+        # Save state for next iteration
+        self._prev_error = error
+        self._last_time = now
+        
+        return output
